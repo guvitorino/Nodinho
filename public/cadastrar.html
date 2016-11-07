@@ -1,4 +1,4 @@
-<html>
+<html ng-app="socialize">
   
   <head>
     <meta charset="utf-8">
@@ -9,10 +9,15 @@
     rel="stylesheet" type="text/css">
     <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
     rel="stylesheet" type="text/css">
-    <title>Entrar:Socialize</title>
+    <title>Cadastrar:Socialize</title>
+
+    <script type="text/javascript">
+      angular.module("socialize", []);
+    </script>
+    <script src="script/usuctrl.js"></script>
   </head>
   
-  <body style="padding-top:100px; ">
+  <body style="padding-top:100px; " ng-controller="usuctrl">
     <div class="section">
       <div class="container">
         <div class="row">
@@ -24,7 +29,7 @@
                   <label for="txtnome" class="control-label">Nome</label>
                 </div>
                 <div class="col-sm-10">
-                  <input type="name" class="form-control input-lg" id="txtnome" placeholder="Nome">
+                  <input type="name" class="form-control input-lg" id="txtnome" placeholder="Nome" ng-model="usuario.nome">
                 </div>
               </div>
               <div class="form-group has-feedback">
@@ -33,7 +38,7 @@
                 </div>
                 <div class="col-sm-10">
                   <input type="email" class="form-control input-lg" id="txtemail"
-                  placeholder="E-mail">
+                  placeholder="E-mail" ng-model="usuario.email">
                 </div>
               </div>
               <div class="form-group has-feedback">
@@ -42,12 +47,12 @@
                 </div>
                 <div class="col-sm-10">
                   <input type="password" class="form-control input-lg" id="txtsenha"
-                  placeholder="Senha">
+                  placeholder="Senha" ng-model="usuario.senha">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-primary">Criar</button>
+                  <button type="submit" class="btn btn-primary" ng-click="adicionarUsuario(usuario)">Criar</button>
                 </div>
               </div>
             </form>
