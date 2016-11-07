@@ -11,6 +11,11 @@ app.get("/entrar",function (req, res){
 app.get("/cadastrar",function (req, res){
 	res.sendFile(path.join(__dirname +"/public/cadastrar.html"));
 })
+
+app.get("/script/usu",function (req, res){
+	res.sendFile(path.join(__dirname +"/public/script/usuctrl.js"));
+})
+
 app.listen(process.env.PORT || 3000, function () {
     console.log('Listening on http://localhost:' + (process.env.PORT || 3000));
 });

@@ -4,7 +4,7 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 
 
 	$scope.adicionarUsuario = function (usuario) {
-		usuario.tipo = verificaTipoMarcado();
+		alert("teste");
 		$http.post("", {nome:usuario.nome, email: usuario.email, senha: usuario.senha})
 		.success(function (data) {
 			delete $scope.usuario;
