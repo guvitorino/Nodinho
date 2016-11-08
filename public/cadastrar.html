@@ -28,23 +28,23 @@
             <form class="form-horizontal" role="form" name="cadastraUsuario">
               <div class="form-group">
                     <label for="txtnome" class="control-label">Nome</label>
-                    <input type="name" class="form-control input-lg" id="txtnome" name="nome" placeholder="Nome" ng-model="usuario.nome" ng-required="true">
+                    <input type="name" class="form-control input-lg" id="txtnome" name="nome" placeholder="Nome" ng-model="usuarioform.nome" ng-required="true">
                     <div style="color:#C42924;text-align: center;padding: 5px" ng-show="cadastraUsuario.nome.$error.required && cadastraUsuario.nome.$dirty" class="alert alert-danger">Preencha o campo Nome!</div>
               </div>
               <div class="form-group has-feedback">
                     <label for="txtemail" class="control-label">E-mail</label>
-                    <input type="email" class="form-control input-lg" id="txtemail" placeholder="E-mail" ng-model="usuario.email" name="email" ng-required="true">
+                    <input type="email" class="form-control input-lg" id="txtemail" placeholder="E-mail" ng-model="usuarioform.email" name="email" ng-required="true">
                     <div style="color:#C42924;text-align: center;padding: 5px" ng-show="cadastraUsuario.email.$error.required && cadastraUsuario.email.$dirty" class="alert alert-danger">Preencha o campo Email!</div>
               </div>
               <div class="form-group has-feedback">
                     <label for="txtsenha" class="control-label">Senha</label>
-                    <input type="password" class="form-control input-lg" id="txtsenha" placeholder="Senha" ng-model="usuario.senha" name="senha" ng-required="true" ng-minlength="6">
+                    <input type="password" class="form-control input-lg" id="txtsenha" placeholder="Senha" ng-model="usuarioform.senha" name="senha" ng-required="true" ng-minlength="6">
                     <div style="color:#C42924;text-align: center;padding: 5px;" ng-show="cadastraUsuario.senha.$error.required && cadastraUsuario.senha.$dirty" class="alert alert-danger">Preencha o campo Senha!!</div>
                     <div style="color:#C42924;text-align: center;padding: 5px;;" ng-show="cadastraUsuario.senha.$error.minlength" class="alert alert-danger">A Senha deve ter no minimo 6 caracteres!!</div>
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-primary" ng-click="adicionarUsuario(usuario)">Criar</button>
+                  <button type="submit" class="btn btn-primary" ng-click="adicionarUsuario()">Criar</button>
                 </div>
               </div>
             </form>
@@ -52,7 +52,7 @@
           <div class="col-md-2"></div>
         </div>
       </div>
-    </div>
+    </div><br><br><br>
     <div class="footer navbar-fixed-bottom">
       <footer class="section section-primary">
         <div class="container" >

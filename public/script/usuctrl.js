@@ -1,13 +1,14 @@
 angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 	$scope.app = "socialize";
-	$scope.usuario = [];
+	$scope.usuarios = [];
 
+	$scope.adicionarUsuario = function () {
 
-	$scope.adicionarUsuario = function (usuario) {
-		alert("teste");
-		$http.post("", {nome:usuario.nome, email: usuario.email, senha: usuario.senha})
+		
+		$http.post("http://127.0.0.1:3000/usuario/salvar",{params:{"usuario":$scope.usuarioform}})
 		.success(function (data) {
-			delete $scope.usuario;
+			delete $scope.usuarioform;
+			alert(data);
 			$scope.salvo = true;
 			$scope.cadastraUsuario.$setPristine();
 		}).error(function (data) {

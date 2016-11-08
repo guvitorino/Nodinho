@@ -1,6 +1,15 @@
 var express = require("express");
 var app = express();
 var path = require('path');
+var mongodb = require('mongodb');
+
+var MongoClient = mongodb.MongoClient;
+var url = 'mongodb://localhost:27017/baseNodinho';
+
+var bodyparser = require('body-parser');
+
+app.use(bodyparser.json());
+
 
 app.get("/",function (req, res){
 	res.sendFile(path.join(__dirname +"/public/index.html"));
@@ -14,6 +23,39 @@ app.get("/cadastrar",function (req, res){
 
 app.get("/script/usu",function (req, res){
 	res.sendFile(path.join(__dirname +"/public/script/usuctrl.js"));
+})
+
+
+app.post("/usuario/salvar",function (req, res){
+	console.log(req.body.params.usuario);
+	usuario = req.body.params.usuario;
+	
+	if(usuario.nome == null){
+		console.error("Ocorreu algum problema");
+  		res.status(500).send('Acontenceu algum problema!');
+  	}else{
+		MongoClient.connect(url, function (err, db) {
+		  if (err){
+		  	console.error(err.stack);
+	  		res.status(500).send('Acontenceu algum problema!');
+		  }else {
+		    var collection = db.collection('usuarios');
+
+		    //Salvar Usuario
+		    var salva_usu = {nome: usuario.nome, email: usuario.email, senha: usuario.senha};
+		
+		    collection.insert(salva_usu, function (err, result) {
+		      if (err){
+		      	console.error("Ocorreu algum problema");
+	  			res.status(500).send('Acontenceu algum problema!');
+		      }else res.status(200).send("Salvo!");
+		    });
+
+		    //Fecha a conexão
+		    db.close();
+		  }
+		});
+	}
 })
 
 app.listen(process.env.PORT || 3000, function () {
