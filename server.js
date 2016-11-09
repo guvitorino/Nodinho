@@ -1,7 +1,13 @@
 var express = require("express");
 var app = express();
+
 var path = require('path');
 var mongodb = require('mongodb');
+
+var crypto = require('crypto');
+var algorithm = 'aes-256-ctr';
+var secret = 'M1lGr4u'
+var secret2 = 'Sup3rn4tur4al'
 
 var MongoClient = mongodb.MongoClient;
 var url = 'mongodb://localhost:27017/baseNodinho';
@@ -58,7 +64,21 @@ app.post("/usuario/salvar",function (req, res){
 	}
 })
 
-app.post("/usuario/login",function (req, res){
+function encrypt(v,tipo){
+  var cipher = crypto.createCipher(algorithm,tipo);
+  var crypted = cipher.update(v,'utf8','hex');
+  crypted += cipher.final('hex');
+  return crypted;
+}
+
+function decrypt(v,tipo){
+  var decipher = crypto.createDecipher(algorithm,tipo)
+  var dec = decipher.update(v,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+
+app.post("/autorize",function (req, res){
 	usuario = req.body.params.usuario;
 	console.log(usuario);
 	if(usuario.email == null){
@@ -76,7 +96,9 @@ app.post("/usuario/login",function (req, res){
 			  if (err){
 		      	console.error("Ocorreu algum problema");
 	  			res.status(500).send('Acontenceu algum problema!');
-		      }else res.status(200).json({id: document._id,nome: document.nome });
+		      }else{
+		      	v = document.id + document.nome;
+		      } res.status(200).json({cod: encrypt(""+document.id,secret2),token: encrypt(v,secret)});
 			});
 
 		    //Fecha a conexão
