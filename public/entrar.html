@@ -1,4 +1,4 @@
-<html>
+<html ng-app="socialize">
   
   <head>
     <meta charset="utf-8">
@@ -12,35 +12,30 @@
     <title>Entrar:Socialize</title>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      angular.module("socialize", []);
+    </script>
+    <script src="script/usu"></script>
   </head>
   
-  <body style="padding-top:100px; ">
+  <body style="padding-top:100px; " ng-controller="usuctrl">
     <div class="section">
       <div class="container">
         <div class="row">
           <div class="col-md-2"></div>
           <div class="col-md-8">
-            <form class="form-horizontal" role="form">
+            <form class="form-horizontal" role="form" name="loginUsuario">
               <div class="form-group">
-                <div class="col-sm-2">
                   <label for="inputEmail3" class="control-label">Email</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="email" class="form-control input-lg" id="inputEmail3" placeholder="Email">
-                </div>
+                  <input type="email" class="form-control input-lg" id="inputEmail3" placeholder="Email" name="email" ng-model="loginform.email">
               </div>
               <div class="form-group has-feedback">
-                <div class="col-sm-2">
                   <label for="inputPassword3" class="control-label">Password</label>
-                </div>
-                <div class="col-sm-10">
-                  <input type="password" class="form-control input-lg" id="inputPassword3"
-                  placeholder="Password">
-                </div>
+                  <input type="password" class="form-control input-lg" id="inputPassword3" placeholder="Password" name="senha" ng-model="loginform.senha">
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-default">Sign in</button>
+                  <button type="submit" class="btn btn-primary" ng-click="entrar()">Entrar</button>
                 </div>
               </div>
             </form>
