@@ -186,6 +186,28 @@ app.post("/postagem",function (req, res){
 	}
 })
 
+app.get("/postagem",function (req, res){
+		MongoClient.connect(url, function (err, db) {
+		  if (err){
+		  	console.error(err.stack);
+	  		res.status(500).send('Acontenceu algum problema!');
+		  }else {
+		    var collection = db.collection('postagens');
+		    collection.find().toArray(function(err, document) {
+                 if (err){
+			      	console.error("Ocorreu algum problema");
+		  			res.status(500).send('Acontenceu algum problema!');
+			      }else{
+			      	console.log(document);
+			      	res.status(200).json(document);
+			      }
+             });
+		    //Fecha a conexão
+		    db.close();
+		  }
+		});
+})
+
 app.listen(process.env.PORT || 8000, function () {
     console.log('Listening on http://localhost:' + (process.env.PORT || 8000));
 });
