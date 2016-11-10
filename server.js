@@ -193,7 +193,7 @@ app.get("/postagem",function (req, res){
 	  		res.status(500).send('Acontenceu algum problema!');
 		  }else {
 		    var collection = db.collection('postagens');
-		    collection.find().toArray(function(err, document) {
+		    collection.find().sort({data: -1}).toArray(function(err, document) {
                  if (err){
 			      	console.error("Ocorreu algum problema");
 		  			res.status(500).send('Acontenceu algum problema!');
