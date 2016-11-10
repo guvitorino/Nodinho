@@ -4,6 +4,7 @@ var app = express();
 var path = require('path');
 var mongodb = require('mongodb');
 
+var ObjectID = require('mongodb').ObjectID;
 var crypto = require('crypto');
 var algorithm = 'aes-256-ctr';
 var secret = 'M1lGr4u'
@@ -14,7 +15,46 @@ var url = 'mongodb://localhost:27017/baseNodinho';
 
 var bodyparser = require('body-parser');
 
+
 app.use(bodyparser.json());
+
+function encrypt(v,tipo){
+  var cipher = crypto.createCipher(algorithm,tipo);
+  var crypted = cipher.update(v,'utf8','hex');
+  crypted += cipher.final('hex');
+  return crypted;
+}
+
+function decrypt(v,tipo){
+  var decipher = crypto.createDecipher(algorithm,tipo)
+  var dec = decipher.update(v,'hex','utf8')
+  dec += decipher.final('utf8');
+  return dec;
+}
+
+function verifica(cod, callback){
+	//console.log(cod);
+	var id = new ObjectID(cod);
+	MongoClient.connect(url, function (err, db) {
+	  if (err){
+	  	console.error(err.stack);
+  		callback(null);
+	  }else {
+	    var collection = db.collection('usuarios');
+	    collection.findOne({"_id": id}, function(err, document) {
+		  if (err){
+	      	console.error("Ocorreu algum problema");
+  			callback(null);
+	      }else{
+	      	callback(document.nome);
+	      }
+		});
+
+	    //Fecha a conexão
+	    db.close();
+	  }
+	});
+}
 
 
 app.get("/",function (req, res){
@@ -31,6 +71,24 @@ app.get("/script/usu",function (req, res){
 	res.sendFile(path.join(__dirname +"/public/script/usuctrl.js"));
 })
 
+app.get("/socialize",function (req, res){
+	res.sendFile(path.join(__dirname +"/public/socialize.html"));
+})
+
+app.get("/redi",function (req, res){
+	dados = JSON.parse(req.query.dados);
+	
+	verifica(dados.cod,function(nome){
+		if(nome != null){
+			url = "http://localhost:8000/socialize";
+			res.status(200).json({url:url, nome:nome});
+		}else{
+			res.status(401).send("Você não Possui permissao");
+		}
+	});
+
+	
+})
 
 app.post("/usuario/salvar",function (req, res){
 	//console.log(req.body.params.usuario);
@@ -64,23 +122,8 @@ app.post("/usuario/salvar",function (req, res){
 	}
 })
 
-function encrypt(v,tipo){
-  var cipher = crypto.createCipher(algorithm,tipo);
-  var crypted = cipher.update(v,'utf8','hex');
-  crypted += cipher.final('hex');
-  return crypted;
-}
-
-function decrypt(v,tipo){
-  var decipher = crypto.createDecipher(algorithm,tipo)
-  var dec = decipher.update(v,'hex','utf8')
-  dec += decipher.final('utf8');
-  return dec;
-}
-
 app.post("/autorize",function (req, res){
 	usuario = req.body.params.usuario;
-	console.log(usuario);
 	if(usuario.email == null){
 		console.error("Ocorreu algum problema");
   		res.status(500).send('Acontenceu algum problema!');
@@ -97,8 +140,14 @@ app.post("/autorize",function (req, res){
 		      	console.error("Ocorreu algum problema");
 	  			res.status(500).send('Acontenceu algum problema!');
 		      }else{
-		      	v = document.id + document.nome;
-		      } res.status(200).json({cod: encrypt(""+document.id,secret2),token: encrypt(v,secret)});
+		      	if(document.senha == usuario.senha){
+		      		v = document.id + document.nome;
+			        res.status(200).json({cod: document._id ,token: encrypt(v,secret)});
+		      	}else{
+		      		res.status(401).send('Tente outra vez!');
+		      	}
+		      	
+		      }
 			});
 
 		    //Fecha a conexão
