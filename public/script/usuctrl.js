@@ -55,5 +55,10 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 			alert(data);
 			$scope.erro = true;
 		});
+	};		
+
+	$scope.sair = function () {
+		localStorage.clear();
+		window.location = "/";
 	};						
 });
