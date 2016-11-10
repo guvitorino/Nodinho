@@ -133,7 +133,7 @@ app.post("/autorize",function (req, res){
 		  	console.error(err.stack);
 	  		res.status(500).send('Acontenceu algum problema!');
 		  }else {
-		    var collection = db.collection('usuarios');
+		    var collection = db.collection('postagens');
 
 		    collection.findOne({email: usuario.email}, function(err, document) {
 			  if (err){
@@ -146,9 +146,37 @@ app.post("/autorize",function (req, res){
 		      	}else{
 		      		res.status(401).send('Tente outra vez!');
 		      	}
-		      	
 		      }
 			});
+
+		    //Fecha a conexão
+		    db.close();
+		  }
+		});
+	}
+})
+
+app.post("/postagem",function (req, res){
+	postagem = req.body.params.postagem;
+	var id = new ObjectID(postagem.cod);
+	if(postagem.textao == null){
+		console.error("Ocorreu algum problema");
+  		res.status(500).send('Acontenceu algum problema!');
+  	}else{
+		MongoClient.connect(url, function (err, db) {
+		  if (err){
+		  	console.error(err.stack);
+	  		res.status(500).send('Acontenceu algum problema!');
+		  }else {
+		    var collection = db.collection('postagens');
+
+		    var salva_post = {descricao:postagem.textao,autor: id, nome_autor:postagem.nomeautor,data: new Date()};
+		    collection.insert(salva_post, function (err, result) {
+		      if (err){
+		      	console.error("Ocorreu algum problema");
+	  			res.status(500).send('Acontenceu algum problema!');
+		      }else res.status(200).send("Salvo!");
+		    });
 
 		    //Fecha a conexão
 		    db.close();

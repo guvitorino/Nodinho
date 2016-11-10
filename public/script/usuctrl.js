@@ -43,5 +43,17 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 			$scope.erro = true;
 		});
 	};
-						
+
+	$scope.postar = function () {
+		postagem = {textao:$scope.postagem.textao,cod:localStorage.getItem("cod"),nomeautor:localStorage.getItem("nome")}
+		$http.post("postagem",{params:{"postagem":postagem}})
+		.success(function (data) {
+			delete $scope.postagem;
+			$scope.textaoPost.$setPristine();
+			alert(data);			
+		}).error(function (data) {
+			alert(data);
+			$scope.erro = true;
+		});
+	};						
 });
