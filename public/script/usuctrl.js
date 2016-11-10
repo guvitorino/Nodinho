@@ -3,6 +3,15 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 	$scope.usuarios = [];
 	$scope.postagens = [];
 
+	var carregarPostagens = function () {
+		$http.get("postagem")
+		.success(function (data) {
+			$scope.postagens = data;			
+		}).error(function (data) {
+			$scope.erro = true;
+		});
+	};
+
 	$scope.adicionarUsuario = function () {
 		$http.post("usuario/salvar",{params:{"usuario":$scope.usuarioform}})
 		.success(function (data) {
@@ -49,6 +58,7 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 		.success(function (data) {
 			delete $scope.postagem;
 			$scope.textaoPost.$setPristine();
+			carregarPostagens();
 			alert(data);			
 		}).error(function (data) {
 			$scope.erro = true;
@@ -60,12 +70,5 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 		window.location = "/";
 	};	
 
-	$scope.carregarPostagens = function () {
-		$http.get("postagem")
-		.success(function (data) {
-			$scope.postagens = data;			
-		}).error(function (data) {
-			$scope.erro = true;
-		});
-	};					
+	carregarPostagens();				
 });
