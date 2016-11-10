@@ -80,8 +80,8 @@ app.get("/redi",function (req, res){
 	
 	verifica(dados.cod,function(nome){
 		if(nome != null){
-			url = "http://localhost:8000/socialize";
-			res.status(200).json({url:url, nome:nome});
+			link = "http://localhost:8000/socialize";
+			res.status(200).json({url:link, nome:nome});
 		}else{
 			res.status(401).send("Você não Possui permissao");
 		}
@@ -124,6 +124,7 @@ app.post("/usuario/salvar",function (req, res){
 
 app.post("/autorize",function (req, res){
 	usuario = req.body.params.usuario;
+	//console.log(usuario);
 	if(usuario.email == null){
 		console.error("Ocorreu algum problema");
   		res.status(500).send('Acontenceu algum problema!');
@@ -133,7 +134,7 @@ app.post("/autorize",function (req, res){
 		  	console.error(err.stack);
 	  		res.status(500).send('Acontenceu algum problema!');
 		  }else {
-		    var collection = db.collection('postagens');
+		    var collection = db.collection('usuarios');
 
 		    collection.findOne({email: usuario.email}, function(err, document) {
 			  if (err){
