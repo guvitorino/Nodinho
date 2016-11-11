@@ -47,7 +47,6 @@ function verifica(cod,token, callback){
   			callback(null);
 	      }else{
 	      	strcomp = document._id + document.nome;
-	      	console.log(" jdfndjfn  " + token);
 	      	if( token == encrypt(strcomp,secret)){
 	      		callback(document.nome);
 	      	}else{
@@ -143,12 +142,12 @@ app.post("/autorize",function (req, res){
 	  		res.status(500).send('Acontenceu algum problema!');
 		  }else {
 		    var collection = db.collection('usuarios');
-
 		    collection.findOne({email: usuario.email}, function(err, document) {
 			  if (err){
 		      	console.error("Ocorreu algum problema");
 	  			res.status(500).send('Acontenceu algum problema!');
 		      }else{
+		      	console.log(usuario.senha + " "+document.senha);
 		      	if(document.senha == usuario.senha){
 		      		v = document._id + document.nome;
 			        res.status(200).json({cod: document._id ,tok: encrypt(v,secret)});

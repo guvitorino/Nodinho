@@ -16,7 +16,11 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 		$http.get("usuarios")
 		.success(function (data) {
 			$scope.usuarios = data;	
-			$scope.pesquisa = $scope.usuarios;
+			for (var i = $scope.usuarios.length - 1; i >= 0; i--) {
+				if($scope.usuarios[i].nome != localStorage.getItem("nome")){
+					$scope.pesquisa.push($scope.usuarios[i]);
+				}
+			}
 		}).error(function (data) {
 			$scope.erro = true;
 		});
