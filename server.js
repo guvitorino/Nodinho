@@ -127,6 +127,45 @@ app.post("/usuario/salvar",function (req, res){
 	}
 })
 
+app.post("/usuario/addamigo",function (req, res){
+	//console.log(req.body.params.usuario);
+	usuario = req.body.params.usuario;
+	amigo = req.body.params.amigo;
+	if(usuario.nome == null){
+		console.error("Ocorreu algum problema");
+  		res.status(500).send('Acontenceu algum problema!');
+  	}else{
+		MongoClient.connect(url, function (err, db) {
+		  if (err){
+		  	console.error(err.stack);
+	  		res.status(500).send('Acontenceu algum problema!');
+		  }else {
+		    var collection = db.collection('usuarios');
+
+		    
+		    collection.update({_id:new ObjectID(usuario._id)},
+		    	{$push:
+		    		{
+		    			amigos:{usuario:amigo}
+		    		}
+		    	}, 
+		    	function (err, result) {
+			      if (err){
+			      	console.error("Ocorreu algum problema");
+		  			res.status(500).send('Acontenceu algum problema!');
+			      }else{
+			      	console.log(result);
+			      	res.status(200).send("Atualizado!");
+			      } 
+		    	});
+
+		    //Fecha a conexão
+		    db.close();
+		  }
+		});
+	}
+})
+
 app.post("/autorize",function (req, res){
 
 	usuario = req.body.params.usuario;
