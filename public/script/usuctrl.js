@@ -12,6 +12,13 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 		});
 	};
 
+	$scope.verificaStatus = function () {
+		$scope.usuario_logado = localStorage.getItem("status");
+		if($scope.usuario_logado == null)
+			window.location = "entrar";
+		
+	};
+
 	$scope.adicionarUsuario = function () {
 		$http.post("usuario/salvar",{params:{"usuario":$scope.usuarioform}})
 		.success(function (data) {
@@ -26,7 +33,7 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 	};
 
 	function redirecionar(){
-		dados = {cod:localStorage.getItem("cod"),token:localStorage.getItem("token")};
+		dados = {cod:localStorage.getItem("cod"),tok:localStorage.getItem("tok")};
 		$http.get("redi",{params:{"dados":dados}})
 		.success(function (data) {
 			localStorage.setItem("nome",data.nome);
@@ -44,7 +51,8 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 			$scope.loginUsuario.$setPristine();
 			//console.log(data.cod)
 			localStorage.setItem("cod",data.cod);
-			localStorage.setItem("token",data.token);
+			localStorage.setItem("tok",data.tok);
+			localStorage.setItem("status",true);
 			redirecionar();
 			
 		}).error(function (data) {

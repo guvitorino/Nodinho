@@ -8,7 +8,7 @@ var ObjectID = require('mongodb').ObjectID;
 var crypto = require('crypto');
 var algorithm = 'aes-256-ctr';
 var secret = 'M1lGr4u'
-var secret2 = 'Sup3rn4tur4al'
+
 
 var MongoClient = mongodb.MongoClient;
 var url = 'mongodb://localhost:27017/baseNodinho';
@@ -32,7 +32,7 @@ function decrypt(v,tipo){
   return dec;
 }
 
-function verifica(cod, callback){
+function verifica(cod,token, callback){
 	//console.log(cod);
 	var id = new ObjectID(cod);
 	MongoClient.connect(url, function (err, db) {
@@ -46,7 +46,13 @@ function verifica(cod, callback){
 	      	console.error("Ocorreu algum problema");
   			callback(null);
 	      }else{
-	      	callback(document.nome);
+	      	strcomp = document._id + document.nome;
+	      	console.log(" jdfndjfn  " + token);
+	      	if( token == encrypt(strcomp,secret)){
+	      		callback(document.nome);
+	      	}else{
+	      		callback(null);
+	      	}
 	      }
 		});
 
@@ -78,7 +84,7 @@ app.get("/socialize",function (req, res){
 app.get("/redi",function (req, res){
 	dados = JSON.parse(req.query.dados);
 	
-	verifica(dados.cod,function(nome){
+	verifica(dados.cod,dados.tok,function(nome){
 		if(nome != null){
 			link = "http://localhost:8000/socialize";
 			res.status(200).json({url:link, nome:nome});
@@ -123,7 +129,9 @@ app.post("/usuario/salvar",function (req, res){
 })
 
 app.post("/autorize",function (req, res){
+
 	usuario = req.body.params.usuario;
+	//console.log(usuario);
 	//console.log(usuario);
 	if(usuario.email == null){
 		console.error("Ocorreu algum problema");
@@ -142,8 +150,8 @@ app.post("/autorize",function (req, res){
 	  			res.status(500).send('Acontenceu algum problema!');
 		      }else{
 		      	if(document.senha == usuario.senha){
-		      		v = document.id + document.nome;
-			        res.status(200).json({cod: document._id ,token: encrypt(v,secret)});
+		      		v = document._id + document.nome;
+			        res.status(200).json({cod: document._id ,tok: encrypt(v,secret)});
 		      	}else{
 		      		res.status(401).send('Tente outra vez!');
 		      	}
@@ -198,7 +206,6 @@ app.get("/postagem",function (req, res){
 			      	console.error("Ocorreu algum problema");
 		  			res.status(500).send('Acontenceu algum problema!');
 			      }else{
-			      	console.log(document);
 			      	res.status(200).json(document);
 			      }
              });
