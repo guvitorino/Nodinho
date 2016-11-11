@@ -1,6 +1,7 @@
 angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 	$scope.app = "socialize";
 	$scope.usuarios = [];
+	$scope.pesquisa = [];
 	$scope.postagens = [];
 
 	var carregarPostagens = function () {
@@ -11,12 +12,30 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 			$scope.erro = true;
 		});
 	};
+	var carregarUsuarios = function () {
+		$http.get("usuarios")
+		.success(function (data) {
+			$scope.usuarios = data;	
+			$scope.pesquisa = $scope.usuarios;
+		}).error(function (data) {
+			$scope.erro = true;
+		});
+	};
 
+	$scope.pesquisar = function () {
+		$scope.pesquisa = [];
+		for (var i = $scope.usuarios.length - 1; i >= 0; i--) {
+			if($scope.usuarios[i].nome.toUpperCase().indexOf($scope.pesq.nome.toUpperCase())>=0){
+				$scope.pesquisa.push($scope.usuarios[i]);
+			}
+		}
+	};
+		
 	$scope.verificaStatus = function () {
 		$scope.usuario_logado = localStorage.getItem("status");
 		if($scope.usuario_logado == null)
 			window.location = "entrar";
-		
+		$scope.nome = localStorage.getItem("nome");
 	};
 
 	$scope.adicionarUsuario = function () {
@@ -78,5 +97,6 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 		window.location = "/";
 	};	
 
-	carregarPostagens();				
+	carregarPostagens();	
+	carregarUsuarios();			
 });
