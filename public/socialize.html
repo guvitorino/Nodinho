@@ -10,9 +10,10 @@
       <title>Pagina Inicial:Socialize</title>
 
       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+      <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <script type="text/javascript">
-      angular.module("socialize", []);
+      angular.module("socialize", ['ngSanitize']);
       </script>
       <script src="script/usuctrl.js"></script>
     </head>
@@ -101,14 +102,14 @@
    						</ul>
    					</div>
    					<div class="col-md-6" style="padding: 20px;">
-                     <div class="col-md-12" ng-repeat="post in postagens" style="background: #3795C2; padding: 20px; border: 1px solid black">
-                        <div class="row"  >
-                           {{post.descricao}}
-                        </div>
-                        <div class="row">
-                        By:{{post.nome_autor}}
-                        </div>
-                     </div>
+               <div class="col-md-12" ng-repeat="post in postagens" style="background: #3795C2; padding: 20px; border: 1px solid black">
+                  <div class="row" ng-bind-html="post.descricao">
+                    
+                  </div>
+                  <div class="row">
+                  By:{{post.nome_autor}}
+                  </div>
+               </div>
    					</div>
    					
    				</div>

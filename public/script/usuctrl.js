@@ -25,7 +25,6 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 	};
 
 	var carregarUsuarios = function () {
-		console.log("OLA");
 		$http.get("usuarios")
 		.success(function (data) {
 			$scope.usuarios = data;	
