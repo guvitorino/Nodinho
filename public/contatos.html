@@ -65,10 +65,17 @@
           <div class="col-md-4"></div>
           <div class="col-md-4">
             <ul class="lead list-group" >
-              <li class="list-group-item" ng-repeat="usuario in usuatual.amigos">{{usuario.usuario.nome}}
-                 <button class="btn btn-primary"  ng-click="adicionarAmigo(usuario)">
-                    <span class="glyphicon glyphicon-envelope"></span>
-                 </button>
+              <li class="list-group-item" ng-repeat="usuario in usuatual.amigos">
+                 <div class="row">
+                   <div class="col-md-8">
+                     {{usuario.usuario.nome}}
+                   </div>
+                   <div class="col-md-4">
+                     <button class="btn btn-primary"  ng-click="">
+                        <span class="glyphicon glyphicon-envelope"></span>
+                     </button>
+                   </div>
+                 </div>
               </li>
             </ul>
           </div>
