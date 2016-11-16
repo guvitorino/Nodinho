@@ -6,6 +6,7 @@
       <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
       <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
       <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
+      <link href="/style/style.css" rel="stylesheet" type="text/css">
 
       <title>Pagina Inicial:Socialize</title>
 
@@ -13,9 +14,11 @@
       <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.js"></script>
       <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
       <script type="text/javascript">
-      angular.module("socialize", ['ngSanitize']);
+        
+        angular.module("socialize", ['ngSanitize']);
       </script>
       <script src="script/usuctrl.js"></script>
+
     </head>
    	<body style="background: #E6E6F2" ng-controller="usuctrl" ng-init="verificaStatus()">
    		<div class="navbar navbar-default navbar-static-top" style="background: #207EC9;">
@@ -103,11 +106,9 @@
    					</div>
    					<div class="col-md-6" style="padding: 20px;">
                <div class="col-md-12" ng-repeat="post in postagens" style="background: #3795C2; padding: 20px; border: 1px solid black">
-                  <div class="row" ng-bind-html="post.descricao">
-                    
-                  </div>
+                  <div class="row" ng-bind-html="post.descricao"></div>
                   <div class="row">
-                  By:{{post.nome_autor}}
+                    By:{{post.nome_autor}}
                   </div>
                </div>
    					</div>
@@ -142,5 +143,7 @@
    				</div>
    			</div>
    		</footer>
+      <script type="text/javascript">
+      </script>
    	</body>
 </html>

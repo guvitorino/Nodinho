@@ -8,7 +8,7 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 	var urlify =function(text) {
 	    var urlRegex = /(https?:\/\/[^\s]+)/g;
 	    return text.replace(urlRegex, function(url) {
-	        return '<a href="' + url + '">' + url + '</a>';
+	        return '<a class="end" id="surl" href="' + url + '">' + url + '</a> <iframe src="'+url+'"></iframe>';
 	    })
 	};
 
