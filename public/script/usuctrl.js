@@ -5,17 +5,27 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 	$scope.pesquisa = [];
 	$scope.postagens = [];
 
+	var urlify =function(text) {
+	    var urlRegex = /(https?:\/\/[^\s]+)/g;
+	    return text.replace(urlRegex, function(url) {
+	        return '<a href="' + url + '">' + url + '</a>';
+	    })
+	};
+
 	var carregarPostagens = function () {
 		$http.get("postagem")
 		.success(function (data) {
-			$scope.postagens = data;			
+			$scope.postagens = data;	
+			for(var i=0; i < $scope.postagens.length; i++){
+				$scope.postagens[i].descricao = urlify($scope.postagens[i].descricao);
+			}		
 		}).error(function (data) {
 			$scope.erro = true;
 		});
 	};
 
-
 	var carregarUsuarios = function () {
+		console.log("OLA");
 		$http.get("usuarios")
 		.success(function (data) {
 			$scope.usuarios = data;	
@@ -24,6 +34,13 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 					$scope.pesquisa.push($scope.usuarios[i]);
 				}else{
 					$scope.usuatual = $scope.usuarios[i];
+				}
+			}
+			for(var i= 0; i < $scope.pesquisa.length; i++){
+				for (var j = 0; j < $scope.usuatual.amigos.length; j++) {
+					if($scope.pesquisa[i].nome == $scope.usuatual.amigos[j].usuario.nome){
+						$scope.pesquisa.splice(i);
+					}
 				}
 			}
 		}).error(function (data) {

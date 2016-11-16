@@ -1,0 +1,107 @@
+<html ng-app="socialize">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css"
+    rel="stylesheet" type="text/css">
+    <link href="https://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css"
+    rel="stylesheet" type="text/css">
+    <title>Contatos:Socialize</title>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      angular.module("socialize", []);
+    </script>
+    <script src="script/usuctrl.js"></script>
+
+  </head>
+  
+  <body style="background: #E6E6F2" ng-controller="usuctrl" ng-init="verificaStatus()">
+    <div class="navbar navbar-default navbar-static-top" style="background: #207EC9;">
+        <div class="container" >
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" style=" color:#FFFFFF"><span>{{nome}} :Socialize</span></a>
+          </div>
+          <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="#" style=" color:#FFFFFF">Página Inicial</a></li>
+              <li><a href="contatos.html" style=" color:#FFFFFF">Contatos</a></li>
+             <li class="dropdown" >
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" style=" color:#FFFFFF">Outros<strong class="caret"></strong></a>
+                <ul class="dropdown-menu">
+                   <li>
+                      <a href="#">Convidar Amigos</a>
+                   </li>
+                   <li>
+                      <a href="#">Minhas Configurações</a>
+                   </li>
+                   <li>
+                      <a href="#">Meus Dados</a>
+                   </li>
+                   <li class="divider">
+                   </li>
+                   <li>
+                      <a href="#" ng-click="sair()">Sair</a>
+                   </li>
+                </ul>
+             </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <div class="section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4"></div>
+          <div class="col-md-4">
+            <ul class="lead list-group" >
+              <li class="list-group-item" ng-repeat="usuario in usuatual.amigos">{{usuario.usuario.nome}}
+                 <button class="btn btn-primary"  ng-click="adicionarAmigo(usuario)">
+                    <span class="glyphicon glyphicon-envelope"></span>
+                 </button>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4"></div>
+        </div>
+      </div>
+    </div>
+    <footer class="section section-primary">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-6">
+              <h1>Socialize</h1>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisici elit,
+                  <br>sed eiusmod tempor incidunt ut labore et dolore magna aliqua.
+                  <br>Ut enim ad minim veniam, quis nostrud</p>
+          </div>
+          <div class="col-sm-6">
+              <p class="text-info text-right">
+                  <br>
+                  <br>
+              </p>
+              <div class="row">
+                  <div class="col-md-12 hidden-xs text-right">
+                      <a href="#" class=".icon"><i class="fa fa-3x fa-fw fa-globe text-inverse"></i></a>
+                      <a href="#" class=".icon"><i class="fa fa-3x fa-fw text-inverse fa-group"></i></a>
+                      <a href="#" class=".icon"><i class="fa fa-3x fa-fw text-inverse fa-github-alt"></i></a>
+                      <a href="#" class=".icon"><i class="fa fa-3x fa-fw hub text-inverse fa-paypal"></i></a>
+                  </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+
+</html>
