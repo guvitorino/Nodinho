@@ -17,6 +17,7 @@ var bodyparser = require('body-parser');
 
 
 app.use(bodyparser.json());
+app.use(express.static("./public"));
 
 function encrypt(v,tipo){
   var cipher = crypto.createCipher(algorithm,tipo);
@@ -62,30 +63,12 @@ function verifica(cod,token, callback){
 }
 
 
-app.get("/",function (req, res){
-	res.sendFile(path.join(__dirname +"/public/index.html"));
-})
-app.get("/entrar",function (req, res){
-	res.sendFile(path.join(__dirname +"/public/entrar.html"));
-})
-app.get("/cadastrar",function (req, res){
-	res.sendFile(path.join(__dirname +"/public/cadastrar.html"));
-})
-
-app.get("/script/usu",function (req, res){
-	res.sendFile(path.join(__dirname +"/public/script/usuctrl.js"));
-})
-
-app.get("/socialize",function (req, res){
-	res.sendFile(path.join(__dirname +"/public/socialize.html"));
-})
-
 app.get("/redi",function (req, res){
 	dados = JSON.parse(req.query.dados);
 	
 	verifica(dados.cod,dados.tok,function(nome){
 		if(nome != null){
-			link = "http://localhost:8000/socialize";
+			link = "socialize.html";
 			res.status(200).json({url:link, nome:nome});
 		}else{
 			res.status(401).send("Você não Possui permissao");

@@ -13,6 +13,8 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 			$scope.erro = true;
 		});
 	};
+
+
 	var carregarUsuarios = function () {
 		$http.get("usuarios")
 		.success(function (data) {
@@ -20,24 +22,14 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 			for (var i = $scope.usuarios.length - 1; i >= 0; i--) {
 				if($scope.usuarios[i].nome != localStorage.getItem("nome")){
 					$scope.pesquisa.push($scope.usuarios[i]);
-				}else
+				}else{
 					$scope.usuatual = $scope.usuarios[i];
+				}
 			}
 		}).error(function (data) {
 			$scope.erro = true;
 		});
 	};
-
-	/*function retiraAmigos(){
-		console.log($scope.usuatual.amigos.length);
-		for (var i = $scope.pesquisa.length - 1; i >= 0; i--) {
-			for (var j = $scope.usuatual.amigos.length - 1; j >= 0; j--) {
-				if($scope.usuatual.amigos[j].usuario._id == $scope.pesquisa[i]._id ){
-					$scope.pesquisa.slice(i,1);
-				}
-			}
-		}
-	}*/
 
 	$scope.pesquisar = function () {
 		$scope.pesquisa = [];
@@ -46,7 +38,6 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 				$scope.pesquisa.push($scope.usuarios[i]);
 			}
 		}
-		//retiraAmigos();
 	};
 		
 	$scope.verificaStatus = function () {
@@ -54,7 +45,7 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 		if($scope.usuario_logado == null)
 			window.location = "entrar";
 		$scope.nome = localStorage.getItem("nome");
-		carregarUsuarios();
+		//carregarUsuarios();
 	};
 
 	$scope.adicionarUsuario = function () {
@@ -127,6 +118,5 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 		window.location = "/";
 	};	
 	carregarUsuarios();
-	carregarPostagens();		
-	//retiraAmigos();		
+	carregarPostagens();				
 });
