@@ -25,6 +25,7 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 	};
 
 	var carregarUsuarios = function () {
+		$scope.pesquisa = [];
 		$http.get("usuarios")
 		.success(function (data) {
 			$scope.usuarios = data;	
@@ -133,6 +134,19 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 			$scope.erro = true;
 		});
 	};	
+
+	$scope.adicionarComentario = function (com, idpost) {
+		comentario = {descricao:com.descricao,autor:$scope.usuatual.nome, idautor: $scope.usuatual._id};
+		$http.post("postagem/addcomentario",{params:{"idpost":idpost,"comentario":comentario}})
+		.success(function (data) {
+			$scope.com.descricao.setPristine();
+			var s = "#comentario" + idpost;
+			$(s).toggle();
+			alert("Adicionado");			
+		}).error(function (data) {
+			$scope.erro = true;
+		});
+	};
 
 	$scope.sair = function () {
 		localStorage.clear();

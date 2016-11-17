@@ -124,8 +124,14 @@
                   </div>
                   <div class="row">
                     <div class="col-md-12" id="comentario{{post._id}}" style="display: none;">
-                      <input type="text" class="text-control"></input>
-                      <button class="btn btn-primary">OK</button>                      
+                      <input type="text" class="text-control" ng-model="com.descricao"></input>
+                      <button class="btn btn-primary" ng-click="adicionarComentario(com, post._id)">OK</button>                      
+                    </div>
+                  </div>
+                  <div class="row"> 
+                    <div class="col-md-12" ng-repeat="comentario in post.comentarios">
+                      <div class="row">{{comentario.descricao}}</div>
+                      <div class="row">{{comentario.autor}}</div>
                     </div>
                   </div>
                </div>

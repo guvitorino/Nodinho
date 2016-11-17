@@ -236,6 +236,49 @@ app.get("/postagem",function (req, res){
 		});
 })
 
+app.post("/postagem/addcomentario",function (req, res){
+	//console.log(req.body.params.usuario);
+	id = req.body.params.idpost;
+	comentario = req.body.params.comentario;
+	if(comentario.descricao == null){
+		console.error("Ocorreu algum problema");
+  		res.status(500).send('Acontenceu algum problema!');
+  	}else{
+		MongoClient.connect(url, function (err, db) {
+		  if (err){
+		  	console.error(err.stack);
+	  		res.status(500).send('Acontenceu algum problema!');
+		  }else {
+		    var collection = db.collection('postagens');
+
+		    
+		    collection.update({_id:new ObjectID(id)},
+		    	{$push:
+		    		{  
+		    			comentarios:{
+		    				descricao : comentario.descricao,
+		    				autor : comentario.autor,
+		    				idautor : new ObjectID(comentario.idautor)
+		    			}
+		    		}
+		    	}, 
+		    	function (err, result) {
+			      if (err){
+			      	console.error("Ocorreu algum problema:"+err);
+		  			res.status(500).send('Acontenceu algum problema!');
+			      }else{
+			      	//console.log(result);
+			      	res.status(200).send("Atualizado!");
+			      } 
+		    	});
+
+		    //Fecha a conexão
+		    db.close();
+		  }
+		});
+	}
+})
+
 app.get("/usuarios",function (req, res){
 		MongoClient.connect(url, function (err, db) {
 		  if (err){
