@@ -77,6 +77,11 @@ angular.module("socialize").controller("usuctrl", function ($scope,$http) {
 		});
 	};
 
+	$scope.controlaCaixa = function (id) {
+		var s = "#comentario" + id;
+		$(s).toggle();
+	};
+
 	function redirecionar(){
 		dados = {cod:localStorage.getItem("cod"),tok:localStorage.getItem("tok")};
 		$http.get("redi",{params:{"dados":dados}})

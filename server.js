@@ -137,7 +137,7 @@ app.post("/usuario/addamigo",function (req, res){
 			      	console.error("Ocorreu algum problema");
 		  			res.status(500).send('Acontenceu algum problema!');
 			      }else{
-			      	console.log(result);
+			      	//console.log(result);
 			      	res.status(200).send("Atualizado!");
 			      } 
 		    	});

@@ -6,6 +6,11 @@
       <script type="text/javascript" src="http://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
       <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
       <link href="http://pingendo.github.io/pingendo-bootstrap/themes/default/bootstrap.css" rel="stylesheet" type="text/css">
+
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+      
+
       <link href="/style/style.css" rel="stylesheet" type="text/css">
 
       <title>Pagina Inicial:Socialize</title>
@@ -87,28 +92,41 @@
    					</div>
    				</div>
    				<div class="row" style="margin-left: -100px; margin-right: -150px;">
-                  <div class="row">
-                     <div class="col-md-4" style="padding-left:30px ">
-                        <form role="form">
-                           <input type="text" class="text-control" ng-model="pesq.nome"></input>
-                           <button class="btn btn-default" type="submit" ng-click="pesquisar()">Pesquisar</button>
-                        </form>
-                     </div>
-                  </div>
+            <div class="row">
+               <div class="col-md-4" style="padding-left:30px ">
+                  <form role="form">
+                     <input type="text" class="text-control" ng-model="pesq.nome"></input>
+                     <button class="btn btn-default" type="submit" ng-click="pesquisar()">Pesquisar</button>
+                  </form>
+               </div>
+            </div>
    					<div class="col-md-4">
    						<ul class="lead list-group" >
    							<li class="list-group-item" ng-repeat="usuario in pesquisa">{{usuario.nome}}
-                           <button class="btn btn-primary" style="border-radius: 30px;" ng-click="adicionarAmigo(usuario)">
-                              <span class="glyphicon glyphicon-plus"></span>
-                           </button>
-                        </li>
+                   <button class="btn btn-primary" style="border-radius: 30px;" ng-click="adicionarAmigo(usuario)">
+                      <span class="glyphicon glyphicon-plus"></span>
+                   </button>
+                </li>
    						</ul>
    					</div>
    					<div class="col-md-6" style="padding: 20px;">
-               <div class="col-md-12" ng-repeat="post in postagens" style="background: #3795C2; padding: 20px; border: 1px solid black">
+               <div class="col-md-12" ng-repeat="post in postagens" style="background: #3795C2; padding: 20px; border: 1px solid black; font-size: 20px; color: black;">
                   <div class="row" ng-bind-html="post.descricao"></div>
                   <div class="row">
                     By:{{post.nome_autor}}
+                  </div>
+                  <div class="row">
+                    <div class="col-md-2" style="color: rgb(180,200,20); ">
+                      <button class="btn btn-primary" style="background-color: Transparent; border: none;cursor:pointer;overflow: hidden;outline:none;" ng-click="controlaCaixa(post._id)">
+                        <span class="glyphicon glyphicon-comment"></span>
+                      </button>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12" id="comentario{{post._id}}" style="display: none;">
+                      <input type="text" class="text-control"></input>
+                      <button class="btn btn-primary">OK</button>                      
+                    </div>
                   </div>
                </div>
    					</div>
